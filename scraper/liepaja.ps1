@@ -170,17 +170,19 @@ if ($events.Count -lt 5) {
   throw "Atrasti tikai $($events.Count) pasakumi - kaut kas nav kartiba, neko nerakstu."
 }
 
+# Supabase slepeno atslegu nepienem no "parlukiem". PowerShell pec
+# noklusejuma sevi piesaka ka "Mozilla...", tapec dodam savu nosaukumu.
 $headers = @{
   apikey          = $sbKey
-  Authorization   = "Bearer $sbKey"
   Prefer          = "resolution=merge-duplicates,return=minimal"
 }
+$agent = "pasakumi-liepaja-nakts-ielade"
 $endpoint = "$sbUrl/rest/v1/events?on_conflict=source_id,external_id"
 for ($i = 0; $i -lt $events.Count; $i += 200) {
   $chunk = $events[$i..([Math]::Min($i + 199, $events.Count - 1))]
   $body = [Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -InputObject @($chunk) -Depth 4))
   $null = Invoke-WebRequest -UseBasicParsing -Method Post -Uri $endpoint -Headers $headers `
-            -ContentType "application/json; charset=utf-8" -Body $body
+            -UserAgent $agent -ContentType "application/json; charset=utf-8" -Body $body
   Write-Host "Ierakstiti $($i + $chunk.Count) no $($events.Count)"
 }
 Write-Host "Gatavs."
