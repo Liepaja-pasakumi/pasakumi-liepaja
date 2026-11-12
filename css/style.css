@@ -1,0 +1,533 @@
+/* =========================================================
+   Pasākumi Liepājā – izskats
+   Krāsas no Liepājas pašvaldības simbolikas noteikumiem
+   (saistošie noteikumi Nr. 24, 2024). Ja gribi mainīt krāsu –
+   maini tikai šeit, :root sadaļā.
+   ========================================================= */
+:root {
+  --red: #D02927;        /* Liepājas sarkanā (Pantone 186 C) */
+  --red-dark: #A01F1E;
+  --green: #007560;      /* Liepājas zaļā (Pantone 341 C) */
+  --green-dark: #16402C;
+  --grey: #C9C9C9;       /* Liepājas pelēkā (Cool Gray 3 C) */
+  --black: #000000;
+
+  --bg: #F4F3F1;         /* lapas fons */
+  --card: #FFFFFF;
+  --line: #E6E4E1;
+  --text: #1A1A1A;
+  --text-2: #5A5A5A;
+
+  --radius: 14px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, .06);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* "hidden" vienmēr paslēpj, arī .panel u.c. */
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+}
+
+button { font: inherit; cursor: pointer; }
+
+a { color: var(--green); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------- Galvene ---------- */
+.top {
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  padding: calc(22px + env(safe-area-inset-top)) 16px 44px;
+}
+.top h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+.top h1::after {               /* īsa balta svītriņa zem virsraksta */
+  content: "";
+  display: block;
+  width: 44px; height: 3px;
+  background: #fff;
+  margin: 10px auto 8px;
+  border-radius: 2px;
+}
+.subtitle { margin: 0; font-size: .85rem; opacity: .92; }
+
+/* ---------- Galvenā kolonna ---------- */
+.wrap {
+  max-width: 640px;
+  margin: -28px auto 0;       /* filtru kartīte "uzkāpj" uz galvenes */
+  padding: 0 16px 24px;
+}
+
+.panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+/* ---------- Datuma josla ---------- */
+.datebar {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  gap: 8px;
+}
+.arrow {
+  height: 48px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 12px;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text);
+}
+.arrow:active { background: var(--bg); }
+
+.date-label {
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--green-dark);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+.today-btn {
+  justify-self: center;
+  border: 0;
+  background: none;
+  color: var(--green);
+  font-weight: 500;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* ---------- Skats: Diena / Viss mēnesis ---------- */
+.viewtoggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 4px;
+}
+.viewtoggle button {
+  height: 38px;
+  border: 0;
+  border-radius: 9px;
+  background: none;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.viewtoggle button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--text);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+}
+
+/* ---------- Meklēšana ---------- */
+.search input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--grey);
+  border-radius: 12px;
+  font: inherit;
+  font-size: 16px;            /* 16px – lai iPhone nepietuvina lapu */
+  background: #fff;
+}
+.search input:focus { outline: 2px solid var(--green); border-color: var(--green); }
+
+/* ---------- Kategoriju pogas ---------- */
+.chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+@media (max-width: 380px) {
+  .chips { grid-template-columns: repeat(2, 1fr); }
+}
+.chip {
+  height: 44px;
+  border: 1.5px solid var(--grey);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  font-weight: 500;
+  font-size: .9rem;
+  white-space: nowrap;
+}
+.chip[aria-pressed="true"] {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+/* Sports – galvenā kategorija, vienmēr izcelta sarkanā */
+.chip-sports { border-color: var(--red); color: var(--red); font-weight: 700; }
+.chip-sports[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: #fff; }
+
+.cat-info {
+  margin: -4px 0 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  font-size: .85rem;
+  color: var(--text-2);
+}
+.cat-info[hidden] { display: none; }
+.cat-info button {
+  border: 0;
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ---------- Saraksts ---------- */
+.list-title {
+  font-size: 1.15rem;
+  margin: 22px 0 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.list-title::before {
+  content: "";
+  width: 4px; height: 20px;
+  background: var(--red);
+  border-radius: 2px;
+}
+
+.events { display: grid; gap: 12px; }
+
+/* Dienas virsraksts mēneša skatā un meklēšanā */
+.day-head {
+  margin: 10px 0 -2px;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+.day-head:first-child { margin-top: 0; }
+
+/* ---------- Izceltie ---------- */
+.featured-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 82%;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 16px;
+  padding-bottom: 6px;
+  margin: 0 -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  scrollbar-width: none;
+}
+.featured-row::-webkit-scrollbar { display: none; }
+.featured-row:has(> :only-child) { grid-auto-columns: 100%; }
+
+.feat {
+  scroll-snap-align: start;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  color: var(--text);
+}
+.feat-img {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.2rem;
+}
+.feat-img.cat-sports { background: linear-gradient(135deg, var(--red-dark), var(--red)); }
+/* Svētku fons: tumši zaļš ar "sniegu" un sarkanu mirdzumu */
+.feat-img.festive {
+  background:
+    radial-gradient(circle at 20% 25%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 15%, rgba(255,255,255,.8) 0 2px, transparent 3px),
+    radial-gradient(circle at 85% 60%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 35% 70%, rgba(255,255,255,.7) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 55% 40%, rgba(255,255,255,.8) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 10% 80%, rgba(255,255,255,.8) 0 2px, transparent 3px),
+    radial-gradient(circle at 50% 110%, rgba(208,41,39,.55), transparent 60%),
+    linear-gradient(160deg, #0d2a1d, var(--green-dark) 55%, var(--green));
+  background-size: 120px 90px, 140px 100px, 110px 80px, 90px 70px, 130px 95px, 100px 85px, 100% 100%, 100% 100%;
+  font-size: 4rem;
+}
+.feat-img img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.feat-date {
+  position: absolute;
+  left: 10px; bottom: 10px;
+  background: var(--green-dark);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.feat-body { padding: 10px 12px 12px; }
+.feat-body .place { font-size: .8rem; }
+.feat-body strong { display: block; margin-top: 2px; font-size: 1rem; line-height: 1.25; }
+
+.credit { display: block; margin-top: 4px; font-size: .7rem; color: var(--text-2); }
+
+.event.flash { box-shadow: 0 0 0 3px var(--red); transition: box-shadow .3s; }
+
+.event {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.event-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--line);
+}
+.event-body { padding: 12px 14px 14px; }
+
+.event-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  margin-bottom: 6px;
+}
+.time {
+  background: var(--green-dark);
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.tag {
+  font-size: .75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.tag-sports  { background: #FADEDC; color: #B02420; }
+.tag-kultura { background: #D9EBE2; color: #00694F; }
+.tag-berniem { background: #E6EDE9; color: var(--green-dark); }
+.tag-citi    { background: #ECECEC; color: #565656; }
+
+.event h3 { margin: 2px 0 4px; font-size: 1.1rem; line-height: 1.25; }
+.place { margin: 0; color: var(--text-2); font-size: .9rem; }
+.price { margin: 2px 0 0; color: var(--text-2); font-size: .85rem; }
+
+.desc { margin: 8px 0 0; font-size: .95rem; }
+.desc[hidden] { display: none; }
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.actions a, .actions button {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 500;
+}
+.actions .more {
+  grid-column: 1 / -1;
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.empty {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 26px 16px;
+  text-align: center;
+  color: var(--text-2);
+}
+.empty b { color: var(--text); display: block; margin-bottom: 4px; }
+
+/* ---------- Kur paēst / nakšņot ---------- */
+.helpers { display: grid; gap: 8px; margin-top: 22px; }
+.helper {
+  display: block;
+  text-align: center;
+  padding: 13px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1.5px solid var(--green);
+  color: var(--green-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ---------- Pievienot sākuma ekrānam ---------- */
+.install {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--green-dark);
+  color: #fff;
+  text-align: center;
+}
+.install p { margin: 0; }
+.install button {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 22px;
+  background: #fff;
+  color: var(--green-dark);
+  font-weight: 700;
+}
+
+.demo-note {
+  margin: 18px 0 0;
+  font-size: .8rem;
+  color: var(--text-2);
+  text-align: center;
+}
+
+.foot {
+  text-align: center;
+  font-size: .8rem;
+  color: var(--text-2);
+  padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+}
+
+/* ---------- Kalendāra logs ---------- */
+.calendar {
+  border: 0;
+  border-radius: 18px;
+  padding: 16px;
+  width: min(360px, calc(100vw - 32px));
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .25);
+}
+.calendar::backdrop { background: rgba(0, 0, 0, .45); }
+
+.cal-head {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.cal-head .arrow { height: 44px; }
+.cal-head strong { font-size: 1.05rem; text-transform: capitalize; }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal-weekdays span {
+  text-align: center;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--text-2);
+  padding: 4px 0;
+}
+.cal-day {
+  position: relative;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font-size: .95rem;
+  color: var(--text);
+}
+.cal-day:hover { background: var(--bg); }
+.cal-day.is-today { box-shadow: inset 0 0 0 2px var(--red); font-weight: 700; }
+.cal-day.is-selected { background: var(--green-dark); color: #fff; }
+.cal-day.has-events::after,
+.dot {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+}
+.cal-day.has-events::after {
+  position: absolute;
+  left: 50%; bottom: 5px;
+  transform: translateX(-50%);
+}
+.cal-day.is-selected.has-events::after { background: #fff; }
+
+.cal-hint { font-size: .8rem; color: var(--text-2); margin: 10px 0 0; }
+.cal-close {
+  width: 100%;
+  margin-top: 10px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--bg);
+  font-weight: 500;
+}
+
+/* ---------- Pieteikšanas forma (pieteikt.html) ---------- */
+.helper-add { background: var(--red); border-color: var(--red); color: #fff; }
+
+.subm label { display: grid; gap: 5px; font-weight: 500; font-size: .95rem; }
+.subm small { font-weight: 400; color: var(--text-2); }
+.subm input, .subm textarea {
+  font: inherit; width: 100%; padding: 11px 12px;
+  border: 1.5px solid var(--grey); border-radius: 10px; background: #fff; color: var(--text);
+}
+.subm input:focus, .subm textarea:focus { outline: none; border-color: var(--green); }
+.subm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.subm-note { margin: 0; font-size: .9rem; color: var(--text-2); }
+.subm-cats { border: 0; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.subm-cats legend { font-weight: 500; font-size: .95rem; margin-bottom: 6px; }
+.subm-cats label {
+  display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+  border: 1.5px solid var(--grey); border-radius: 10px; font-weight: 500; cursor: pointer;
+}
+.subm-cats label:has(input:checked) { border-color: var(--green); background: #E9F4F0; }
+.subm-cats input { width: auto; margin: 0; accent-color: var(--green); }
+.subm-preview { max-width: 100%; max-height: 220px; border-radius: 10px; object-fit: cover; }
+.hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.subm-ts { min-height: 65px; }
+.subm-msg { margin: 0; min-height: 1.2em; color: var(--red); font-weight: 500; }
+.subm-msg.ok { color: var(--green); }
+.subm-btn {
+  padding: 14px; border: 0; border-radius: 12px; background: var(--green); color: #fff;
+  font-weight: 700; font-size: 1.05rem;
+}
+.subm-btn:disabled { opacity: .6; }
+.subm-done h2 { margin: 0; }
+.subm-done p { margin: 0; }
+.subm-back { text-align: center; margin: 18px 0 30px; }
