@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admins · Pasākumi Liepājā</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <header class="a-top">
+    <h1>Pasākumu pārvaldība</h1>
+    <div class="a-user" id="userBox" hidden>
+      <span id="userEmail"></span>
+      <button id="logoutBtn">Iziet</button>
+    </div>
+  </header>
+
+  <!-- ========== PIETEIKŠANĀS ========== -->
+  <main class="a-wrap" id="loginView">
+    <form class="a-card login" id="loginForm">
+      <h2>Ienākt</h2>
+      <label>E-pasts
+        <input type="email" id="loginEmail" autocomplete="username" required>
+      </label>
+      <label>Parole
+        <input type="password" id="loginPass" autocomplete="current-password" required>
+      </label>
+      <button type="submit" class="btn btn-green">Ienākt</button>
+      <p class="msg" id="loginMsg"></p>
+    </form>
+  </main>
+
+  <!-- ========== SARAKSTS ========== -->
+  <main class="a-wrap" id="listView" hidden>
+    <nav class="tabs" role="tablist">
+      <button data-tab="pending" class="active">⏳ Gaida apstiprinājumu <b id="cntPending">0</b></button>
+      <button data-tab="published">✅ Publicētie <b id="cntPublished">0</b></button>
+      <button data-tab="rejected">✖ Noraidītie <b id="cntRejected">0</b></button>
+    </nav>
+
+    <div class="a-card filters">
+      <input type="search" id="q" placeholder="🔍 Meklēt pēc nosaukuma vai vietas…">
+      <label class="chk"><input type="checkbox" id="onlyFuture" checked> Tikai no šodienas</label>
+      <label class="chk"><input type="checkbox" id="onlyFeatured"> Tikai ⭐ izceltie</label>
+      <button class="btn" id="reloadBtn">↻ Atjaunot</button>
+    </div>
+
+    <p class="msg" id="listMsg"></p>
+    <div id="rows" class="rows"></div>
+  </main>
+
+  <!-- ========== LABOŠANAS LOGS ========== -->
+  <dialog id="editDlg" class="a-dialog">
+    <form method="dialog" id="editForm">
+      <h2>Labot pasākumu</h2>
+      <label>Nosaukums <input name="title" required></label>
+      <div class="grid3">
+        <label>Datums <input type="date" name="date" required></label>
+        <label>Beigu datums <input type="date" name="end_date"></label>
+        <label>Laiks <input name="time" placeholder="19:00" pattern="\d{2}:\d{2}"></label>
+      </div>
+      <label>Vieta <input name="place"></label>
+      <div class="grid3">
+        <label>Kategorija
+          <select name="category">
+            <option value="sports">Sports</option>
+            <option value="kultura">Kultūra</option>
+            <option value="berniem">Bērniem</option>
+            <option value="citi">Citi</option>
+          </select>
+        </label>
+        <label>Cena <input name="price" placeholder="Bezmaksas / 5 €"></label>
+        <label class="chk"><input type="checkbox" name="featured"> ⭐ Izceltais</label>
+      </div>
+      <label>Apraksts <textarea name="description" rows="4"></textarea></label>
+      <label>Bildes saite <input name="image" type="url"></label>
+      <label>Saite uz pasākumu <input name="url" type="url"></label>
+      <p class="hint">Pēc labošanas nakts ielāde šo pasākumu vairs nepārrakstīs.</p>
+      <div class="dlg-actions">
+        <button value="cancel" class="btn">Atcelt</button>
+        <button value="save" class="btn btn-green" id="saveBtn">Saglabāt</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

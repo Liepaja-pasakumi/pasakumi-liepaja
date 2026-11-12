@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pasākumi Liepājā</title>
+  <meta name="description" content="Visi Liepājas pasākumi vienuviet – sports, kultūra, bērniem un citi.">
+
+  <!-- PWA: lai lietotni var pievienot telefona sākuma ekrānam -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#D02927">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Pasākumi">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Fonts: Roboto (to pašu lieto liepaja.lv) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========== GALVENE ========== -->
+  <header class="top">
+    <h1>Pasākumi Liepājā</h1>
+    <p class="subtitle">Visi pilsētas pasākumi vienuviet · atjaunots katru nakti</p>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ========== FILTRI ========== -->
+    <section class="panel" aria-label="Filtri">
+
+      <!-- Datuma josla: ◀ datums ▶ -->
+      <div class="datebar">
+        <button class="arrow" id="prevDay" aria-label="Iepriekšējā diena">‹</button>
+        <button class="date-label" id="openCalendar" aria-haspopup="dialog">
+          <span class="date-icon" aria-hidden="true">📅</span>
+          <span id="dateText">Šodien</span>
+        </button>
+        <button class="arrow" id="nextDay" aria-label="Nākamā diena">›</button>
+      </div>
+
+      <!-- Skats: viena diena vai viss mēnesis -->
+      <div class="viewtoggle" role="group" aria-label="Skats">
+        <button data-view="day" aria-pressed="true">Diena</button>
+        <button data-view="month" aria-pressed="false">Viss mēnesis</button>
+      </div>
+
+      <button class="today-btn" id="todayBtn" hidden>Atpakaļ uz šodienu</button>
+
+      <!-- Meklēšana -->
+      <label class="search">
+        <span class="visually-hidden">Meklēt</span>
+        <input type="search" id="search" placeholder="🔍 Meklēt visos pasākumos…" autocomplete="off">
+      </label>
+
+      <!-- Kategorijas: spiediens = tikai šī kategorija; vēlreiz = visas -->
+      <div class="chips" role="group" aria-label="Kategorijas">
+        <button class="chip chip-sports" data-cat="sports" aria-pressed="false">🏅 Sports</button>
+        <button class="chip" data-cat="kultura" aria-pressed="false">🎭 Kultūra</button>
+        <button class="chip" data-cat="berniem" aria-pressed="false">🧸 Bērniem</button>
+        <button class="chip" data-cat="citi" aria-pressed="false">✨ Citi</button>
+      </div>
+      <p class="cat-info" id="catInfo" hidden>
+        <span id="catInfoText"></span>
+        <button id="catClear">✕ Rādīt visus</button>
+      </p>
+    </section>
+
+    <!-- ========== PASĀKUMU SARAKSTS ========== -->
+    <section aria-live="polite">
+      <h2 class="list-title" id="listTitle">Šodien notiek</h2>
+      <div id="events" class="events"></div>
+    </section>
+
+    <!-- ========== KUR PAĒST / NAKŠŅOT ========== -->
+    <section class="helpers">
+      <a class="helper" href="https://www.liepaja.travel/" target="_blank" rel="noopener">🍽️ Kur paēst? Uzzini šeit!</a>
+      <a class="helper" href="https://www.liepaja.travel/" target="_blank" rel="noopener">🛏️ Kur nakšņot? Uzzini šeit!</a>
+      <a class="helper helper-add" href="pieteikt.html">➕ Rīko pasākumu? Piesaki to šeit!</a>
+    </section>
+
+    <!-- ========== IZCELTIE – lapas apakšā (lielas bildes, var bīdīt ar pirkstu) ========== -->
+    <section class="featured" id="featuredBox" hidden>
+      <h2 class="list-title">Izceltie</h2>
+      <div class="featured-row" id="featured"></div>
+    </section>
+
+    <!-- Pievienot sākuma ekrānam (rādās tikai, ja vēl nav pievienots) -->
+    <section class="install" id="installBox" hidden>
+      <p id="installText">Pievieno šo lietotni telefona sākuma ekrānam!</p>
+      <button id="installBtn" hidden>Pievienot</button>
+    </section>
+
+    <p class="demo-note" id="demoNote">⚠️ Šobrīd redzami <b>parauga pasākumi</b> – īstie nāks no liepaja.lv.</p>
+  </main>
+
+  <footer class="foot">
+    Dati: <a href="https://kalendars.liepaja.lv" target="_blank" rel="noopener">kalendars.liepaja.lv</a>
+    un organizatori
+  </footer>
+
+  <!-- ========== KALENDĀRA LOGS ========== -->
+  <dialog id="calendar" class="calendar" aria-label="Izvēlies datumu">
+    <div class="cal-head">
+      <button class="arrow" id="prevMonth" aria-label="Iepriekšējais mēnesis">‹</button>
+      <strong id="monthText"></strong>
+      <button class="arrow" id="nextMonth" aria-label="Nākamais mēnesis">›</button>
+    </div>
+    <div class="cal-grid cal-weekdays" aria-hidden="true">
+      <span>P</span><span>O</span><span>T</span><span>C</span><span>Pk</span><span>S</span><span>Sv</span>
+    </div>
+    <div class="cal-grid" id="calDays"></div>
+    <p class="cal-hint"><span class="dot"></span> – dienā ir pasākumi</p>
+    <button class="cal-close" id="closeCalendar">Aizvērt</button>
+  </dialog>
+
+  <script src="js/demo-events.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

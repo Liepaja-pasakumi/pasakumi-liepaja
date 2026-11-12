@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pieteikt pasākumu · Pasākumi Liepājā</title>
+  <meta name="description" content="Piesaki savu pasākumu Liepājā – pēc pārbaudes tas parādīsies kalendārā.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#D02927">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Cloudflare Turnstile – aizsardzība pret robotiem -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+
+  <header class="top">
+    <h1>Pieteikt pasākumu</h1>
+    <p class="subtitle">Pēc pārbaudes tas parādīsies Liepājas pasākumu kalendārā</p>
+  </header>
+
+  <main class="wrap">
+    <form class="panel subm" id="form" novalidate>
+      <p class="subm-note">Lauki ar <b>*</b> ir obligāti. Pieteikums netiek publicēts uzreiz –
+        to vispirms apskata administrators.</p>
+
+      <label>Pasākuma nosaukums *
+        <input name="title" required minlength="3" maxlength="200" placeholder="Piem., Rudens koncerts">
+      </label>
+
+      <div class="subm-row">
+        <label>Datums *
+          <input type="date" name="date" required>
+        </label>
+        <label>Sākuma laiks
+          <input type="time" name="time">
+        </label>
+      </div>
+
+      <label>Beigu datums <small>(ja ilgst vairākas dienas)</small>
+        <input type="date" name="end_date">
+      </label>
+
+      <label>Vieta *
+        <input name="place" required minlength="2" maxlength="200" placeholder="Piem., Liepājas Olimpiskais centrs">
+      </label>
+
+      <fieldset class="subm-cats">
+        <legend>Kategorija *</legend>
+        <label><input type="radio" name="category" value="sports" required> 🏅 Sports</label>
+        <label><input type="radio" name="category" value="kultura"> 🎭 Kultūra</label>
+        <label><input type="radio" name="category" value="berniem"> 🧸 Bērniem</label>
+        <label><input type="radio" name="category" value="citi"> ✨ Citi</label>
+      </fieldset>
+
+      <label>Apraksts
+        <textarea name="description" rows="5" maxlength="3000" placeholder="Kas notiks, kam paredzēts, cena…"></textarea>
+      </label>
+
+      <label>Attēls <small>(JPG, PNG vai WEBP)</small>
+        <input type="file" name="image" accept="image/jpeg,image/png,image/webp">
+      </label>
+      <img id="preview" class="subm-preview" alt="" hidden>
+
+      <label>Saite <small>(biļetes vai vairāk informācijas)</small>
+        <input type="url" name="url" maxlength="500" placeholder="https://…">
+      </label>
+
+      <label>Organizators
+        <input name="organizer" maxlength="200" placeholder="Biedrība, skola, klubs…">
+      </label>
+
+      <label>Tavs e-pasts <small>(redzēs tikai administrators, ja būs jautājumi)</small>
+        <input type="email" name="contact" maxlength="200" autocomplete="email">
+      </label>
+
+      <!-- Slazds robotiem: cilvēks šo lauku neredz -->
+      <label class="hp" aria-hidden="true">Mājaslapa
+        <input name="website" tabindex="-1" autocomplete="off">
+      </label>
+
+      <!-- Turnstile. TESTA atslēga – pirms publicēšanas nomainīt uz īsto (skat. js/pieteikt.js) -->
+      <div class="subm-ts" id="tsBox"></div>
+
+      <p class="subm-msg" id="msg" role="status"></p>
+      <button type="submit" class="subm-btn" id="sendBtn">Nosūtīt pieteikumu</button>
+    </form>
+
+    <section class="panel subm-done" id="done" hidden>
+      <h2>Paldies! 🎉</h2>
+      <p>Pieteikums saņemts. Kad administrators to apstiprinās, pasākums parādīsies kalendārā.</p>
+      <p><a href="index.html">← Atpakaļ uz pasākumiem</a> · <a href="pieteikt.html">Pieteikt vēl vienu</a></p>
+    </section>
+
+    <p class="subm-back"><a href="index.html">← Atpakaļ uz pasākumiem</a></p>
+  </main>
+
+  <script src="js/pieteikt.js"></script>
+</body>
+</html>

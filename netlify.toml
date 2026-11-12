@@ -1,0 +1,28 @@
+# Netlify iestatījumi. Būvēšanas nav – publicē failus tādus, kādi tie ir.
+[build]
+  publish = "."
+
+# Admina lapu meklētājos nerāda
+[[headers]]
+  for = "/admin.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# Service worker vienmēr svaigs (lai telefoni ātri saņem jaunāko versiju)
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# Iekšējās mapes nav paredzētas apmeklētājiem
+[[redirects]]
+  from = "/scraper/*"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/supabase/*"
+  to = "/"
+  status = 302
+  force = true
