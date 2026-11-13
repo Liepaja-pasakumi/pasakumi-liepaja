@@ -20,3 +20,12 @@ jobs:
           SUPABASE_URL: https://vajibazlcehbalkrkqfl.supabase.co
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: .\scraper\liepaja.ps1
+
+      # LSSS pec Liepajas kalendara - lai dublikatus var atsijat pret jau ielasitajiem
+      - name: LSSS kalendars
+        if: always()
+        shell: powershell
+        env:
+          SUPABASE_URL: https://vajibazlcehbalkrkqfl.supabase.co
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: .\scraper\lsss.ps1
