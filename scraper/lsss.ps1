@@ -129,6 +129,7 @@ if ($events.Count -eq 0) {
 
 # Supabase slepeno atslegu nepienem no "parlukiem" - dodam savu nosaukumu
 $headers = @{ apikey = $sbKey; Prefer = "resolution=merge-duplicates,return=minimal" }
+$runStart = [DateTime]::UtcNow.AddMinutes(-2).ToString("yyyy-MM-ddTHH:mm:ssZ")
 $agent = "pasakumi-liepaja-nakts-ielade"
 $body = [Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -InputObject $events -Depth 4))
 $null = Invoke-WebRequest -UseBasicParsing -Method Post -Uri "$sbUrl/rest/v1/events?on_conflict=source_id,external_id" `
@@ -139,4 +140,11 @@ Write-Host "Ierakstiti $($events.Count)"
 $r = Invoke-WebRequest -UseBasicParsing -Method Post -Uri "$sbUrl/rest/v1/rpc/mark_duplicates" `
        -Headers @{ apikey = $sbKey } -UserAgent $agent -ContentType "application/json" -Body "{}"
 Write-Host "Atzimeti dublikati: $(Get-Text $r)"
+
+# Speles, kas LSSS kalendara vairs nav (atceltas/parceltas) -> iznem no lapas
+$lastDay = $first.AddMonths($Months).AddDays(-1).ToString("yyyy-MM-dd")
+$rm = @{ src = "lsss"; run_started = $runStart; from_date = $todayKey; to_date = $lastDay } | ConvertTo-Json
+$r = Invoke-WebRequest -UseBasicParsing -Method Post -Uri "$sbUrl/rest/v1/rpc/remove_missing" `
+       -Headers @{ apikey = $sbKey } -UserAgent $agent -ContentType "application/json" -Body $rm
+Write-Host "Iznemti avota pazudusie: $(Get-Text $r)"
 Write-Host "Gatavs."

@@ -145,6 +145,7 @@ foreach ($c in $CATEGORIES) {
     $items = Get-Category $c.id $c.ours $from $until
   } catch {
     Write-Warning ("Kategorija {0}: kluda {1}" -f $c.id, $_.Exception.Message)
+    $script:failed = $true    # tad netirisim "pazudusos" - varbut tie vienkarsi netika nolasiti
     continue
   }
   $new = 0
@@ -185,11 +186,24 @@ $headers = @{
 }
 $agent = "pasakumi-liepaja-nakts-ielade"
 $endpoint = "$sbUrl/rest/v1/events?on_conflict=source_id,external_id"
+# Ielades sakums (minus 2 min rezervei) - visi sobrid atjaunotie bus jaunaki par so
+$runStart = [DateTime]::UtcNow.AddMinutes(-2).ToString("yyyy-MM-ddTHH:mm:ssZ")
 for ($i = 0; $i -lt $events.Count; $i += 200) {
   $chunk = $events[$i..([Math]::Min($i + 199, $events.Count - 1))]
   $body = [Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -InputObject @($chunk) -Depth 4))
   $null = Invoke-WebRequest -UseBasicParsing -Method Post -Uri $endpoint -Headers $headers `
             -UserAgent $agent -ContentType "application/json; charset=utf-8" -Body $body
   Write-Host "Ierakstiti $($i + $chunk.Count) no $($events.Count)"
+}
+
+# Pasakumi, kas avota vairs nav (atcelti/parcelti) -> iznem no lapas.
+# Tikai tad, ja VISAS kategorijas nolasitas bez kludam.
+if ($script:failed) {
+  Write-Host "Kada kategorija neizdevas - pazudusos netirisu."
+} else {
+  $rm = @{ src = "liepaja"; run_started = $runStart; from_date = $from; to_date = $until } | ConvertTo-Json
+  $r = Invoke-WebRequest -UseBasicParsing -Method Post -Uri "$sbUrl/rest/v1/rpc/remove_missing" `
+         -Headers @{ apikey = $sbKey } -UserAgent $agent -ContentType "application/json" -Body $rm
+  Write-Host "Iznemti avota pazudusie: $(Get-Text $r)"
 }
 Write-Host "Gatavs."
