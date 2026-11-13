@@ -4,9 +4,11 @@
 const SUPABASE_URL = "https://vajibazlcehbalkrkqfl.supabase.co";
 const SUPABASE_KEY = "sb_publishable_0FCc4zYqkBgw3rG2qIqZ3A_bNk66EF3"; // publiska atslēga
 
-// Cloudflare Turnstile "site key" (publiska). Šī ir Cloudflare TESTA atslēga –
-// tā vienmēr palaiž cauri. 6. solī nomainīt uz īsto no Cloudflare paneļa!
-const TURNSTILE_SITE_KEY = "1x00000000000000000000AA";
+// Cloudflare Turnstile "site key" (publiska, der tikai pasakumi-liepaja.netlify.app).
+// Datorā (localhost) lieto Cloudflare TESTA atslēgu, jo īstā tur nedarbojas.
+// Slepenā atslēga ir Supabase → Edge Functions → Secrets → TURNSTILE_SECRET.
+const IS_LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+const TURNSTILE_SITE_KEY = IS_LOCAL ? "1x00000000000000000000AA" : "0x4AAAAAAF_QwxI3vZ4tTtfo";
 
 const MAX_SIDE = 1600;          // bildi samazina līdz 1600 px garākajā malā
 const $ = id => document.getElementById(id);
