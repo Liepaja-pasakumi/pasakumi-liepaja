@@ -1,4 +1,4 @@
-# ======================================================
+# =========================================================
 # Nakts ielade: kalendars.liepaja.lv -> Supabase
 #
 # Ka darbojas:
@@ -34,12 +34,12 @@ $AJAX = "$SITE/ajax.php?route=/post/get/events/"
 #     noklusejuma ari nerada).
 $CATEGORIES = @(
   @{ id = 15;  ours = "sports"  },  # Sports
-  @{ id = 104; ours = "sports"  },  # Aktiva atputa
   @{ id = 88;  ours = "berniem" },  # Gimenem un berniem
   @{ id = 6;   ours = "kultura" },  # Izrades
   @{ id = 9;   ours = "kultura" },  # Koncerti
   @{ id = 105; ours = "kultura" },  # Kino
   @{ id = 108; ours = "kultura" },  # Liepaja 2027
+  @{ id = 104; ours = "citi"    },  # Aktiva atputa (tur ir ari muzikas vakari u.c. - lietotaja lemums 13.11.)
   @{ id = 100; ours = "citi"    },  # Svetki un brivdabas pasakumi
   @{ id = 99;  ours = "citi"    },  # Turisms
   @{ id = 103; ours = "citi"    },  # Pasizaugsmei
