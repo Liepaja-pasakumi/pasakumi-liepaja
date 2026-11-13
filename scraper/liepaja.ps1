@@ -48,6 +48,11 @@ $CATEGORIES = @(
   @{ id = 107; ours = "citi"    }   # (nezinams nosaukums, ir noklusejuma saraksta)
 )
 
+# Nosaukumi, kurus NERADA zem Sports, bet zem Citi (piem. pneimatiska sautuve "Lodite").
+# Punkts aizstaj burtu ar garumzimi (s/s, i/i), lai fails paliek bez garumzimem.
+# Jaunu iznemumu pievieno ar "|", piem. "autuve|Lod.te|cits vards".
+$NOT_SPORT = "autuve|Lod.te"
+
 function Get-Text($resp) {
   return [Text.Encoding]::UTF8.GetString($resp.RawContentStream.ToArray())
 }
@@ -145,6 +150,8 @@ foreach ($c in $CATEGORIES) {
   $new = 0
   foreach ($it in $items) {
     if ($it.date -gt $until) { continue }
+    # Pasakumi, kas kalendara ir zem Sports, bet nav sports (lietotaja lemums)
+    if ($it.category -eq "sports" -and $it.title -match $NOT_SPORT) { $it.category = "citi" }
     if (-not $all.Contains($it.external_id)) { $all[$it.external_id] = $it; $new++ }
   }
   Write-Host ("Kategorija {0,3} -> {1,-8}: {2,4} atrasti, {3,4} jauni" -f $c.id, $c.ours, $items.Count, $new)
