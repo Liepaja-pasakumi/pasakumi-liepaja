@@ -35,7 +35,7 @@ $AJAX = "$SITE/ajax.php?route=/post/get/events/"
 $CATEGORIES = @(
   @{ id = 15;  ours = "sports"  },  # Sports
   @{ id = 88;  ours = "berniem" },  # Gimenem un berniem
-  @{ id = 6;   ours = "kultura" },  # Izrades
+  @{ id = 6;   ours = "teatris" },  # Izrades -> Teatris (lietotaja lemums 19.11.; bernu izrades paliek Berniem)
   @{ id = 9;   ours = "kultura" },  # Koncerti
   @{ id = 105; ours = "kultura" },  # Kino
   @{ id = 108; ours = "kultura" },  # Liepaja 2027
