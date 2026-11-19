@@ -95,8 +95,8 @@ const state = {
   calMonth: null            // kurš mēnesis atvērts kalendāra logā
 };
 
-const CAT_NAMES = { sports: "Sports", kultura: "Kultūra", berniem: "Bērniem", citi: "Citi" };
-const CAT_ICONS = { sports: "🏅", kultura: "🎭", berniem: "🧸", citi: "✨" };
+const CAT_NAMES = { sports: "Sports", teatris: "Teātris", kultura: "Kultūra", berniem: "Bērniem", citi: "Citi" };
+const CAT_ICONS = { sports: "🏅", teatris: "🎭", kultura: "🎵", berniem: "🧸", citi: "✨" };
 
 // Pareizā ikona pēc sporta veida nosaukumā (lai basketbolam nav futbola bumba)
 const SPORT_ICONS = [

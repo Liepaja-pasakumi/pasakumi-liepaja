@@ -8,7 +8,7 @@ const SUPABASE_URL = "https://vajibazlcehbalkrkqfl.supabase.co";
 const SUPABASE_KEY = "sb_publishable_0FCc4zYqkBgw3rG2qIqZ3A_bNk66EF3"; // publiska atslēga
 const SESSION_KEY = "pasakumi-admin-sesija";
 
-const CAT_NAMES = { sports: "Sports", kultura: "Kultūra", berniem: "Bērniem", citi: "Citi" };
+const CAT_NAMES = { sports: "Sports", teatris: "Teātris", kultura: "Kultūra", berniem: "Bērniem", citi: "Citi" };
 const $ = id => document.getElementById(id);
 
 const st = {
