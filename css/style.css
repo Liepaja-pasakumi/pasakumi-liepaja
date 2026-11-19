@@ -158,13 +158,17 @@ a { color: var(--green); }
 .search input:focus { outline: 2px solid var(--green); border-color: var(--green); }
 
 /* ---------- Kategoriju pogas ---------- */
+/* 5 pogas: telefonā 2 rindas (3 + 2), platā ekrānā visas vienā rindā */
 .chips {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 8px;
 }
-@media (max-width: 380px) {
-  .chips { grid-template-columns: repeat(2, 1fr); }
+.chips .chip { grid-column: span 2; }
+.chips .chip:nth-child(n+4) { grid-column: span 3; }
+@media (min-width: 640px) {
+  .chips { grid-template-columns: repeat(5, 1fr); }
+  .chips .chip, .chips .chip:nth-child(n+4) { grid-column: auto; }
 }
 .chip {
   height: 44px;
@@ -336,6 +340,7 @@ a { color: var(--green); }
   letter-spacing: .4px;
 }
 .tag-sports  { background: #FADEDC; color: #B02420; }
+.tag-teatris { background: #F3E3E3; color: var(--red-dark); }
 .tag-kultura { background: #D9EBE2; color: #00694F; }
 .tag-berniem { background: #E6EDE9; color: var(--green-dark); }
 .tag-citi    { background: #ECECEC; color: #565656; }
