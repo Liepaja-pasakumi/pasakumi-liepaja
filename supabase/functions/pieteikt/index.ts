@@ -17,7 +17,7 @@
 const TURNSTILE_TEST_SECRET = "1x0000000000000000000000000000000AA";
 const BUCKET = "pasakumu-bildes";
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
-const CATEGORIES = ["sports", "kultura", "berniem", "citi"];
+const CATEGORIES = ["sports", "teatris", "kultura", "berniem", "citi"];
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
